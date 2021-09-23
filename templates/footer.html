@@ -1,108 +1,102 @@
+{% load static %}
+{% load i18n %}
 
-{% comment %} <footer class="container py-5">
-  <div class="row">
-    <div class="col-12 col-md">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-      <small class="d-block mb-3 text-muted">&copy; 2017-2021</small>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Features</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Cool stuff</a></li>
-        <li><a class="text-muted" href="#">Random feature</a></li>
-        <li><a class="text-muted" href="#">Team feature</a></li>
-        <li><a class="text-muted" href="#">Stuff for developers</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Resources</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Resource</a></li>
-        <li><a class="text-muted" href="#">Resource name</a></li>
-        <li><a class="text-muted" href="#">Another resource</a></li>
-        <li><a class="text-muted" href="#">Final resource</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>Resources</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Business</a></li>
-        <li><a class="text-muted" href="#">Education</a></li>
-        <li><a class="text-muted" href="#">Government</a></li>
-        <li><a class="text-muted" href="#">Gaming</a></li>
-      </ul>
-    </div>
-    <div class="col-6 col-md">
-      <h5>About</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Team</a></li>
-        <li><a class="text-muted" href="#">Locations</a></li>
-        <li><a class="text-muted" href="#">Privacy</a></li>
-        <li><a class="text-muted" href="#">Terms</a></li>
-      </ul>
-    </div>
-  </div><br>
+
+
+<div class='bg-light py-5 mt-5'>
   <div class="container">
-        <div class="row text-center">
-            <div class="col-md-12">
-                <p>
-                    Copyright &copy;
-                    <script>document.write(new Date().getFullYear());</script>
-                    All rights reserved | This website is made with <i class="fas fa-heart"></i>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer> {% endcomment %}
+    <div class="row">
+      <div class="col-6 col-md">
+          
 
-    <!-- footer -->
-    <footer class="bg-dark text-white py-0">
-      <div class="container">
-        <div class="row separated">
-          <div class="col-lg-6 py-10">
-            <div class="row">
-              <div class="col-md-8">
-                <p>Thanks to <a href="https://www.opumo.com/" class="underline">Opumo</a> for the product images used in this demo theme. Head over to <a href="https://www.opumo.com/" class="underline">their store</a> to get these products.</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-10">
-                <h4 class="eyebrow mb-2">Quick Links</h4>
-                <ul class="list-group list-group-columns">
-                  <li class="list-group-item"><a href="about.html">About</a></li>
-                  <li class="list-group-item"><a href="contact.html">Contact Us</a></li>
-                  <li class="list-group-item"><a href="faq.html">FAQ</a></li>
-                  <li class="list-group-item"><a href="blog.html">Blog</a></li>
-                  <li class="list-group-item"><a href="text.html">Terms of Use</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 py-10">
-            <div class="row justify-content-end">
-              <div class="col-lg-10">
-                <h4 class="eyebrow mb-2">Subscribe</h4>
-                <div class="input-group">
-                  <input type="text" class="form-control form-control-lg" placeholder="Email" aria-label="Subscribe" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btns btnwhite" type="button" id="button-addon2">Subscribe</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row justify-content-end">
-              <div class="col-lg-10">
-                <h4 class="eyebrow mb-2">Follow us</h4>
-                <nav class="nav nav-icons">
-                  <a class="nav-link" href="#!"><i class="icon-facebook-o"></i></a>
-                  <a class="nav-link" href="#!"><i class="icon-twitter-o"></i></a>
-                  <a class="nav-link" href="#!"><i class="icon-youtube-o"></i></a>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
+          <blockquote class="blockquote text-left">
+          <a class="navbar-brand-footer text-uppercase mr-0 pt-0 text-decoration-none" href="{% url 'home' %}">ecom</a>
+          <footer class="blockquote"><small>© 2021,<cite title="Source Title">Ecom</cite></small></footer>
+            <p class="mb-0"><ul class="list-inline">
+              <li class="list-inline-item">
+                  <img src="{% static 'fonts/bootstrap-icons/paypal-seeklogo.com.svg' %}" alt="paypal icon" width="60" height="30">
+              </li>
+              <li class="list-inline-item">
+                  <img src="{% static 'fonts/bootstrap-icons/ShopPay - Color.svg' %}" alt="ShopPay icon" width="60" height="30">
+              </li>
+              <li class="list-inline-item">
+                  <img src="{% static 'fonts/bootstrap-icons/google-pay-seeklogo.com.svg' %}" alt="google-pay icon" width="60" height="30">
+              </li>
+          </ul></p>
+            
+          </blockquote>
       </div>
-    </footer>
+      {% comment %} <div class="col-6 col-md">
+          <h5 class='text-black'>Shop</h5>
+          <ul class="list-unstyled text-small">
+          <li><a class="text-muted" href="#">Resource</a></li>
+          <li><a class="text-muted" href="#">Resource name</a></li>
 
-    
+          {% if request.user.is_authenticated %}
+            <li><a class="text-muted" href="#">{% trans "My Profile" %}</a></li>
+            <li><a class="text-muted" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a></li>
+          {% else %}
+            <li><a class="text-muted" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a></li>
+            <li><a class="text-muted" href="{% url 'account_login' %}">{% trans "Sign In" %}</a></li>
+          {% endif %}
+          </ul>
+      </div> {% endcomment %}
+      <div class="col-6 col-md">
+          <h5 class='text-black'>Support</h5>
+
+          <ul class="list-unstyled text-small">
+
+            <li class='my-3'>
+              <a class="text-muted text-decoration-none" href="{% url 'faq' %}">
+                {% trans "FAQs" %}
+              </a>
+            </li>
+
+            <li class='my-3'>
+              <a class="text-muted text-decoration-none" href="{% url 'shipping_returns' %}">
+                {% trans "Shipping & Return " %}
+              </a>
+            </li>
+
+            <li class='my-3'>
+              <a class="text-muted text-decoration-none" href="{% url 'privacy_policy' %}">
+                {% trans "Privacy policy" %}
+              </a>
+            </li>
+          
+            <li class='my-3'>
+              <a class="text-muted text-decoration-none" href="{% url 'terms_of_use' %}">
+                {% trans "Terms of Use" %}
+              </a>
+            </li>
+
+
+            <li class='my-3'>
+              <a class="text-muted text-decoration-none" href="{% url 'about' %}">
+                {% trans "About us" %}
+              </a>
+            </li>
+
+          </ul>
+      </div>
+
+      <div class="col-6 col-md">
+          <h5 class='text-black' >Connect us</h5>
+          
+          <p class="my-3 text-muted">E-mail:</p>
+          <p class="my-3 text-muted">hello@ecomdesign.com</p>
+  
+      </div>
+
+      <div class="col-6 col-md">
+        <h5 class='text-black'>Follow us</h5>
+          <div class="d-flex justify-content-start my-3">
+          <a class='mr-3 footer-icon' href="#!"></i><img src="{% static 'fonts/bootstrap-icons/facebook.svg' %}" alt="facebook"></a>
+          <a class='mr-3 footer-icon' href="#!"><img src="{% static 'fonts/bootstrap-icons/twitter.svg' %}" alt="twitter"></a>
+          <a class='mr-3 footer-icon' href="#!"><img src="{% static 'fonts/bootstrap-icons/youtube.svg' %}" alt="youtube"></a>
+          </div>
+          <a href="#" class='text-primary my-3 text-decoration-none'>Back to top</a>
+      </div>
+    </div>
+  </div>
+</div>

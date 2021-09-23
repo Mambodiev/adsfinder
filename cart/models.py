@@ -1,12 +1,40 @@
 from django.contrib.auth import get_user_model
+from ckeditor_uploader.fields import RichTextUploadingField
+from django.db.models import Q
 from django.db import models
+from django.db.models import Avg, Count
 from django.db.models.signals import pre_save
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from django.forms import ModelForm
 
 User = get_user_model()
 
 
+# blog.models
+
+
+
+class ProductQuerySet(models.QuerySet):
+    def search(self, query=None):
+        qs = self.query
+        if query is not None:
+            or_lookup = (Q(title_icontains=query)|
+                         Q(description_icontains=query)|
+                         Q(slug_icontains=query)
+                        )
+            qs = qs.filter(or_lookup).distinct()
+        return qs
+
+
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return ProductQuerySet(self.model, using=self._db)
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
+
+    
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -27,12 +55,13 @@ class Address(models.Model):
     address_line_1 = models.CharField(max_length=150)
     address_line_2 = models.CharField(max_length=150)
     city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=20)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.address_line_1}, {self.address_line_2}, {self.city}, {self.zip_code}"
+        return f"{self.address_line_1}, {self.address_line_2}, {self.city}, {self.zip_code}, {self.state},"
 
     class Meta:
         verbose_name_plural = 'Addresses'
@@ -53,15 +82,17 @@ class SizeVariation(models.Model):
 
 
 class Product(models.Model):
-    title = models.CharField(max_length=150)
-    slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to='product_images')
-    description = models.TextField()
+    title = models.CharField(max_length=150, help_text='this is place for the title of the product')
+    slug = models.SlugField(null=False, unique=True)
+    featured = models.ImageField(upload_to='product_images')
+    product_detail = RichTextUploadingField(blank=True, null=True)
+    specification = RichTextUploadingField(blank=True, null=True)
     price = models.IntegerField(default=0)
+    price_save = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=False)
-    available_colours = models.ManyToManyField(ColourVariation)
+    available_colours = models.ManyToManyField(ColourVariation, blank=True)
     available_sizes = models.ManyToManyField(SizeVariation)
     primary_category = models.ForeignKey(
         Category, related_name='primary_products', blank=True, null=True, on_delete=models.CASCADE)
@@ -83,9 +114,94 @@ class Product(models.Model):
     def get_price(self):
         return "{:.2f}".format(self.price / 100)
 
+    # @property
+    # def imageURL(self):
+    #     try:
+    #         url = self.featured.url
+    #     except Url.DoesNotExist:
+    #         url = ''
+    #     print('URL:', url)
+    #     return url
+
     @property
     def in_stock(self):
         return self.stock > 0
+
+    @property
+    def comments(self):
+        return self.comment_set.all()[:3]
+
+    def avaregereview(self):
+        reviews = Comment.objects.filter(product=self, approved='True').aggregate(avarage=Avg('rate'))
+        avg = 0
+        if reviews["avarage"] is not None:
+            avg = float(reviews["avarage"])
+        return avg
+
+    def countreview(self):
+        reviews = Comment.objects.filter(product=self, approved='True').aggregate(count=Count('id'))
+        cnt = 0
+        if reviews["count"] is not None:
+            cnt = int(reviews["count"])
+        return cnt
+
+    # @property
+    # def product_detail(self):
+    #     return self.product_detail_set.all()
+
+
+# class ProductDetail(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=150)
+#     description = RichTextUploadingField()
+
+#     def __str__(self):
+#         return self.description
+
+
+class Image(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, blank=True)
+    image = models.ImageField()
+
+    def __str__(self):
+        return self.name
+
+    # @property
+    # def imageURL(self):
+    #     try:
+    #         url = self.image.url
+    #     except Url.DoesNotExist:
+    #         url = ''
+    #     print('URL:', url)
+    #     return url
+
+
+class Comment(models.Model):
+    # STATUS = (
+    #     ('New', 'New'),
+    #     ('True', 'True'),
+    #     ('False', 'False'),
+    # )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=50, blank=True)
+    content = models.CharField(max_length=250, blank=True)
+    rate = models.IntegerField(default=1)
+    ip = models.CharField(max_length=20, blank=True)
+    # status = models.CharField(max_length=10, choices=STATUS, default='New')
+    approved=models.BooleanField(default=False)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.subject
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['subject', 'content', 'rate']
 
 
 class OrderItem(models.Model):
@@ -113,6 +229,7 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField(blank=True, null=True)
     ordered = models.BooleanField(default=False)
+    
 
     billing_address = models.ForeignKey(
         Address, related_name='billing_address', blank=True, null=True, on_delete=models.SET_NULL)
