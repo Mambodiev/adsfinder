@@ -7,7 +7,7 @@
 
 <div class="container">
 
-<div class="bg-white py-3">
+<div class="bg-white py-3 mt-3">
     <div class="row">
         <div class="col-md-12 mb-0">
             <a href="{% url 'home' %}">{% trans "Home" %}</a>
@@ -31,13 +31,7 @@
                         <a class='text-decoration-none' href="{{ product.get_absolute_url }}">
                             <p class="mb-0">{{ product.title }}</p>
                             
-                            <div class="product-rating mb-0" id="product-rating">
-                                <i class="icon-star{% if product.avaregereview < 1%}-o empty{% endif%}"></i>
-                                <i class="icon-star{% if product.avaregereview < 2%}-o empty{% endif%}"></i>
-                                <i class="icon-star{% if product.avaregereview < 3%}-o empty{% endif%}"></i>
-                                <i class="icon-star{% if product.avaregereview < 4%}-o empty{% endif%}"></i>
-                                <i class="icon-star{% if product.avaregereview < 5%}-o empty{% endif%}"></i> ({{ product.countreview}})
-                            </div>
+                            <div class="mb-1 text-muted">Posted {{ product.updated|timesince }} ago</div>
 
                             <span class="text-muted text-center h5">${{ product.get_price }}
                                 <del><small class="text-danger"> ${{ product.price_save }}</small><del>

@@ -19,7 +19,7 @@
 }
 .navbar-brand{
   font-size: 22px;
-  padding-top: .5rem!important;
+  /* padding-top: .5rem!important; */
 }
 .navbar-brand-footer{
   font-size: 22px;
@@ -33,7 +33,7 @@
   position: relative;
 }
 .icon-nav{
-  margin-top: .8rem!important;
+  /* margin-top: .8rem!important; */
 }
 @media only screen and (max-width: 768px){
   .navbar{
@@ -428,3 +428,30 @@ min-height:430px;
   color: #6c757d;
 }
 
+
+
+#module {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+#module #collapseExample.collapse:not(.show) {
+  display: block;
+  height: 3rem;
+  overflow: hidden;
+}
+
+#module #collapseExample.collapsing {
+  height: 3rem;
+}
+
+#module a.collapsed::after {
+  content: '+ Show More';
+}
+
+#module a:not(.collapsed)::after {
+  content: '- Show Less';
+}
+
+::marker{ display:none; } summary{ list-style: none }

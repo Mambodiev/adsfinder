@@ -9,16 +9,15 @@ class ProductForm(forms.ModelForm):
         fields = (
             'title_en',
             'slug_en',
-            'specification_en',
+            'short_product_detail_en',
             'product_detail_en',
             'featured',
-            'price',
             'available_colours',
             'available_sizes',
             'primary_category',
             'secondary_categories',
             'title_fr',
             'slug_fr',
-            'specification_fr',
+            'short_product_detail_fr',
             'product_detail_fr',
         )

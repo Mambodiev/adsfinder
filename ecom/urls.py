@@ -47,6 +47,6 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
 
-admin.site.index_title = 'The Ecommerce store'
-admin.site.site_header = 'The Ecommerce store Admin'
-admin.site.site_title = 'Site Title Ecommerce store Admin'
+admin.site.index_title = 'The Adsfinder website'
+admin.site.site_header = 'The Adsfinder website Admin'
+admin.site.site_title = 'Site Title Adsfinder website Admin'

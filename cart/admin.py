@@ -30,7 +30,6 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = [
                     'title', 
                     'active',
-                    'price', 
                     'stock', 
                     'updated']
 
@@ -38,21 +37,29 @@ class ProductAdmin(admin.ModelAdmin):
             (u'ColourVariation', {'fields': (
                     'title_en',
                     'slug_en',
+                    'short_product_detail_en',
                     'product_detail_en',
-                    'specification_en',
                     'featured',
                     'available_colours',
                     'available_sizes',
                     'active',
                     'primary_category',
                     'secondary_categories',
-                    'price', 
-                    'price_save',
+                    'selling_price',
+                    'product_cost',
+                    'product_margin',
+                    'profit',
+                    'engagement',
+                    'links',
+                    'fb_ads',
+                    'video',
+                    'targeting',
+                    'retail_price',
                     'stock', 
                     'title_fr',
                     'slug_fr',
                     'product_detail_fr',
-                    'specification_fr',
+                    'short_product_detail_fr',
                     
             )})
         ]

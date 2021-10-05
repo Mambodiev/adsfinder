@@ -6,8 +6,8 @@
 {% block content %}
 
 <div class="container">
-  <div class="bg-white py-3">
-      <div class="row">
+  <div class="bg-white">
+      <div class="row pt-5">
           <div class="col-md-12 mb-0">
               <a class='text-decoration-none text-dark' href="{% url 'home' %}">{% trans "Home" %}</a>
               <span class="mx-2 mb-0">/</span>
@@ -16,8 +16,8 @@
       </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-6">
+  <div class="row py-2">
+    <div class="col-sm-4 p-3">
         <img id="featured" src="{{product.featured.url}}" class="img-fluid">   
         <div class="justify-content-md-center" id="slide-wrapper">
           <img id="slideLeft" class="arrow" src = "{% static 'fonts/bootstrap-icons/chevron-left.svg' %}" alt="chevron-left"/>
@@ -30,33 +30,18 @@
         </div>
     </div> 
           
-    <div class=" col-sm-6">
-      <h1 class="text-black">{{ product.title }}</h1><br>
-      <div class="product">
-        <div class="product-rating  float-left" id="product-rating">
-          <i class="icon-star{% if product.avaregereview < 1%}-o empty{% endif%}"></i>
-          <i class="icon-star{% if product.avaregereview < 2%}-o empty{% endif%}"></i>
-          <i class="icon-star{% if product.avaregereview < 3%}-o empty{% endif%}"></i>
-          <i class="icon-star{% if product.avaregereview < 4%}-o empty{% endif%}"></i>
-          <i class="icon-star{% if product.avaregereview < 5%}-o empty{% endif%}"></i>
-          <span class='ml-3'>{{ product.avaregereview |stringformat:".2f"}}<span>
-        </div>
-
-        <div class="d-flex justify-content-around pl-3">
-          <a class='text-decoration-none text-dark' href="#list-item-4">{{ product.countreview}}  {% trans "Review(s) / Add Review" %}</a>
-        </div>
-      </div><br><br>
-
-      <h3>
-        US  ${{ product.get_price }}
-        <del class="text-danger"><small class="text-danger ml-3">${{ product.price_save }}</small><del>
-      </h3><br><hr>
-
-      <h5 class='text-muted'>
-        {% trans 'Available stock:' %} {{ product.stock }} {% trans 'Units' %}
-      </h5><br>
-      {% if product.in_stock %}
-
+    <div class=" col-sm-8">
+      <h1 class="text-black">{{ product.title }}</h1>
+      <ul class="list-inline">
+        <li class="list-inline-item border p-2 my-lg-0 my-2 h4">US  ${{ product.get_selling_price }}</li>
+        <li class="list-inline-item border p-2 my-lg-0 my-2 text-danger h4"> US  ${{ product.get_product_cost }}</li>
+        <li class="list-inline-item border p-2 my-lg-0 my-2 text-success h4">US  ${{ product.get_product_margin }}</li>
+      </ul>
+      {{ product.short_product_detail|safe }}
+      <details>
+        <summary class='text-success'>Show More</summary>
+        {{ product.product_detail|safe }}
+      </details>    
       <form method="POST">
           {% csrf_token %}
           <div class="form-row">
@@ -75,16 +60,12 @@
               <button type="submit" class="btn btn-primary btn-sm btn-block addtocart" id="addtocart">{% trans "Add to cart" %}</button>
             </div>
           </div>
-      </form><br>
-
-      {% else %}
-      <h5>
-        {% trans 'This item is out of stock' %}
-      </h5>
-      {% endif %}
+      </form>
+      <br>
     </div>
   </div><br><br>
 
+  
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <ul class="navar-nav  text-center p-1">
@@ -286,5 +267,9 @@ let thumbnails = document.getElementsByClassName('thumbnail')
 		    buttonLeft.addEventListener('click', function(){
 		      document.getElementById('slider').scrollLeft -= 180;
 		    })
+        function myFunction() {
+  var x = document.getElementById("myDetails");
+  x.open = true;
+}
 </script>
 {% endblock content %}

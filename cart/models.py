@@ -86,9 +86,17 @@ class Product(models.Model):
     slug = models.SlugField(null=False, unique=True)
     featured = models.ImageField(upload_to='product_images')
     product_detail = RichTextUploadingField(blank=True, null=True)
-    specification = RichTextUploadingField(blank=True, null=True)
-    price = models.IntegerField(default=0)
-    price_save = models.IntegerField(default=0)
+    short_product_detail = RichTextUploadingField(blank=True, null=True)
+    selling_price = models.IntegerField(default=0)
+    product_cost= models.IntegerField(default=0)
+    product_margin= models.IntegerField(default=0)
+    profit = RichTextUploadingField(blank=True, null=True)
+    engagement = RichTextUploadingField(blank=True, null=True)
+    links = RichTextUploadingField(blank=True, null=True)
+    fb_ads = RichTextUploadingField(blank=True, null=True)
+    video = RichTextUploadingField(blank=True, null=True)
+    targeting = RichTextUploadingField(blank=True, null=True)
+    retail_price = RichTextUploadingField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=False)
@@ -111,8 +119,14 @@ class Product(models.Model):
     def get_delete_url(self):
         return reverse("staff:product-delete", kwargs={'pk': self.pk})
 
-    def get_price(self):
-        return "{:.2f}".format(self.price / 100)
+    def get_selling_price(self):
+        return "{:.2f}".format(self.selling_price / 100)
+
+    def get_product_cost(self):
+        return "{:.2f}".format(self.product_cost / 100)
+
+    def get_product_margin(self):
+        return "{:.2f}".format(self.product_margin / 100)
 
     # @property
     # def imageURL(self):
@@ -216,11 +230,11 @@ class OrderItem(models.Model):
         return f"{self.quantity} x {self.product.title}"
 
     def get_raw_total_item_price(self):
-        return self.quantity * self.product.price
+        return self.quantity * self.product.selling_price
 
     def get_total_item_price(self):
-        price = self.get_raw_total_item_price()  # 1000
-        return "{:.2f}".format(price / 100)
+        selling_price = self.get_raw_total_item_price()  # 1000
+        return "{:.2f}".format(selling_price / 100)
 
 
 class Order(models.Model):
